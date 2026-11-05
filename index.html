@@ -12,15 +12,15 @@
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
 <style>
-:root{
-  --bg:#EDEFF7;--card:#FFFFFF;--ink:#1A2036;--mute:#6B7390;--line:#DDE1EE;
-  --accent:#0F8F8B;--accent-ink:#FFFFFF;--warm:#FF9E5E;--soft:#DDF2F0;
-  --font:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,"Segoe UI",sans-serif;
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#10141F;--card:#1B2132;--ink:#EEF1FA;--mute:#98A1BD;--line:#2B3350;
-  --accent:#4FD1C5;--accent-ink:#0A1A19;--warm:#FFA970;--soft:#16302F}
-}
+:root{--bg:#EDEFF7;--card:#fff;--ink:#1A2036;--mute:#6B7390;--line:#DDE1EE;--accent:#0F8F8B;--accent-ink:#fff;--warm:#FF9E5E;--soft:#DDF2F0;
+  --font:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,"Segoe UI",sans-serif}
+[data-t=dark]{--bg:#10141F;--card:#1B2132;--ink:#EEF1FA;--mute:#98A1BD;--line:#2B3350;--accent:#4FD1C5;--accent-ink:#0A1A19;--soft:#16302F}
+[data-p=sunset]{--accent:#D9480F;--soft:#FFE8D9;--warm:#FFB454}
+[data-p=lavender]{--accent:#6B4EF0;--soft:#E7E2FF;--warm:#FF8FB1}
+[data-p=forest]{--accent:#2F7D45;--soft:#DCF0E0;--warm:#E9B949}
+[data-t=dark][data-p=sunset]{--accent:#FF8A4C;--soft:#3A2418;--accent-ink:#2A1204}
+[data-t=dark][data-p=lavender]{--accent:#A99BFF;--soft:#25213F;--accent-ink:#161033}
+[data-t=dark][data-p=forest]{--accent:#6FD08A;--soft:#18301F;--accent-ink:#0B1D10}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);overscroll-behavior:none;
@@ -46,9 +46,9 @@ h2{font-size:15px;margin:22px 0 10px;color:var(--mute);font-weight:600}
 .cta{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));padding:12px 18px;
   background:linear-gradient(transparent,var(--bg) 35%);z-index:5}
 .cta button{display:block;width:100%;max-width:484px;margin:0 auto;background:var(--accent);color:var(--accent-ink);
-  border-radius:22px;padding:18px;font-size:19px;font-weight:700;box-shadow:0 6px 18px rgba(15,143,139,.28)}
+  border-radius:22px;padding:18px;font-size:19px;font-weight:700;box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 30%,transparent)}
 .cta button:active,.big:active{transform:scale(.98)}
-.tabs{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr 1fr;background:var(--card);
+.tabs{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);
   border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:6}
 .tabs button{padding:12px 0 10px;font-size:13px;color:var(--mute);font-weight:600}
 .tabs button[aria-selected=true]{color:var(--accent)}
@@ -74,9 +74,43 @@ h2{font-size:15px;margin:22px 0 10px;color:var(--mute);font-weight:600}
 /* figures */
 svg{display:block;width:100%;height:100%}
 .gr{stroke:var(--line);stroke-width:3;stroke-linecap:round}
-.fg polyline{fill:none;stroke:var(--ink);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+.fg polyline{fill:none;stroke:var(--ink);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.fg .tr{stroke:var(--accent);stroke-width:15}
 .hd{fill:var(--warm)}
+.zn{fill:var(--warm);opacity:.4;transform-box:fill-box;transform-origin:center;animation:pz 1.6s ease-in-out infinite}
+.row .zn{animation:none}
+.fg .fr{opacity:.4;stroke-width:6}
+.ar{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.row .hv{font-size:24px;padding:8px;color:var(--warm);line-height:1}
+.mat{fill:var(--soft)}.cp{fill:var(--ink)}.cp.fr{opacity:.4}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px}
+.wk div{background:var(--card);border-radius:14px;padding:8px 0;text-align:center;border:2px solid transparent}
+.wk small{display:block;color:var(--mute);font-size:11px}
+.wk b{display:block;height:20px;line-height:20px;font-size:16px}
+.wk .ok{background:var(--accent);color:var(--accent-ink)}.wk .ok small{color:inherit;opacity:.8}
+.wk .pl b{color:var(--accent)}.wk .ms b{color:var(--mute)}.wk .td{border-color:var(--accent)}
+.bd{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bd div{background:var(--card);border-radius:16px;padding:12px 6px;text-align:center;opacity:.4;filter:grayscale(1)}
+.bd div.on{opacity:1;filter:none}
+.bd i{display:block;font-style:normal;font-size:28px}.bd b{display:block;font-size:13px;margin-top:4px}.bd small{color:var(--mute);font-size:11px}
+.art{position:relative}.mm{position:absolute;top:10px;right:12px}
+.hist .ck{color:var(--accent);margin-right:4px}
+#sm{color:var(--accent);font-weight:700;font-size:14px;margin:0}
+@keyframes pz{50%{opacity:.8;transform:scale(1.25)}}
 .dsh{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:4 5}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{background:var(--card);border:2px solid transparent;border-radius:20px;padding:10px 14px;font-weight:600}
+.chips button[aria-pressed=true]{border-color:var(--accent);background:var(--soft)}
+.sw{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border-radius:18px;padding:14px 16px;margin-top:8px;text-align:left}
+.sw small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
+.sw i{width:50px;height:30px;border-radius:15px;background:var(--line);position:relative;flex:none;transition:background .2s}
+.sw i:after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw[aria-pressed=true] i{background:var(--accent)}.sw[aria-pressed=true] i:after{transform:translateX(20px)}
+.pal{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.pal button{background:var(--card);border:2px solid transparent;border-radius:16px;padding:10px 4px;font-size:12px;font-weight:600}
+.pal i{display:block;width:26px;height:26px;border-radius:50%;background:var(--c);margin:0 auto 6px}
+.pal button[aria-pressed=true]{border-color:var(--c)}
+.rg{width:100%;accent-color:var(--accent);margin:8px 0 2px}
 /* session */
 #ses{position:fixed;inset:0;background:var(--bg);z-index:20;display:none;flex-direction:column;
   padding:calc(env(safe-area-inset-top,0px) + 12px) 18px calc(env(safe-area-inset-bottom,0px) + 16px)}
@@ -105,18 +139,20 @@ svg{display:block;width:100%;height:100%}
   padding:24px 18px calc(env(safe-area-inset-bottom,0px) + 24px)}
 #done.on{display:flex}
 #done h1{text-align:center;font-size:34px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <main class="page" id="home">
   <div class="hdr"><div><h1>Rozciąganie</h1><p class="sub" id="hi"></p></div></div>
+  <div class="wk" id="wk"></div><p class="sub" id="wkp" style="margin-top:8px"></p>
   <h2>Poziom</h2>
   <div class="seg" id="lvSeg"></div>
   <h2>Długość</h2>
   <div class="seg" id="lnSeg"></div>
   <div class="hdr"><h2>Twój plan</h2><button class="ghost" id="shuf">Wylosuj inny</button></div>
   <div id="plan"></div>
+  <div id="pmap"></div>
 </main>
 
 <main class="page" id="stats" hidden>
@@ -124,10 +160,13 @@ svg{display:block;width:100%;height:100%}
   <div id="statsBody"></div>
 </main>
 
+<main class="page" id="setp" hidden><h1>Ustawienia</h1><div id="setBody"></div><input type="file" id="imp" accept=".json,application/json" hidden></main>
+
 <div class="cta" id="cta"><button id="go">Start</button></div>
 <nav class="tabs">
   <button id="t1" aria-selected="true"><i>🧘</i>Trening</button>
   <button id="t2" aria-selected="false"><i>📊</i>Statystyki</button>
+  <button id="t3" aria-selected="false"><i>⚙️</i>Ustawienia</button>
 </nav>
 
 <section id="ses" aria-live="polite">
@@ -141,6 +180,7 @@ svg{display:block;width:100%;height:100%}
     <span class="pill" id="pill"></span>
     <div class="art" id="art"></div>
     <h2 id="sn" style="color:var(--ink);margin:2px 0 0"></h2>
+    <p id="sm"></p>
     <p id="st"></p>
     <div class="ring">
       <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fgc" id="rg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="0"/></svg>
@@ -160,41 +200,69 @@ svg{display:block;width:100%;height:100%}
 </section>
 
 <script>
-const F=(h,L,x='')=>`<svg viewBox="0 0 200 140" aria-hidden="true"><line class="gr" x1="12" y1="130" x2="188" y2="130"/><g class="fg">${L.map(p=>`<polyline points="${p}"/>`).join('')}</g><circle class="hd" cx="${h[0]}" cy="${h[1]}" r="9"/>${x}</svg>`;
-const S=['100,45 100,85','100,85 90,130','100,85 110,130'];
+const F=(h,z,L,x='')=>{const l=L.map((p,i)=>({f:p[0]==='~',t:!i,p:p.replace('~','')}));
+return `<svg viewBox="0 0 200 140" aria-hidden="true"><defs><marker id="ah" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0,0L7,3.5L0,7z" style="fill:var(--accent)"/></marker></defs>${h[1]>=80?'<rect class="mat" x="16" y="130" width="168" height="7" rx="3.5"/>':'<ellipse class="mat" cx="100" cy="132" rx="34" ry="4"/>'}<line class="gr" x1="12" y1="130" x2="188" y2="130"/>${x}<circle class="zn" cx="${z[0]}" cy="${z[1]}" r="15"/><g class="fg">${l.filter(a=>a.f).concat(l.filter(a=>!a.f)).map(a=>`<polyline class="${a.t?'tr':a.f?'fr':''}" points="${a.p}"/>`).join('')}</g>${l.filter(a=>!a.t).map(a=>{const q=a.p.split(' ').pop().split(',');return `<circle class="cp${a.f?' fr':''}" cx="${q[0]}" cy="${q[1]}" r="5"/>`}).join('')}<circle class="hd" cx="${h[0]}" cy="${h[1]}" r="10"/></svg>`};
+const AR=d=>`<path class="ar" d="${d}" marker-end="url(#ah)"/>`;
+const S=['100,45 100,85','100,85 90,130','~100,85 112,130'];
+const A='Szyja i barki',B='Plecy',C='Biodra',D='Nogi',GR=[A,B,C,D];
+const E=(n,lv,g,m,tip,v,sides)=>({n,lv,g,m,tip,v,sides});
 const EX=[
-{n:'Rotacje szyi',lv:1,tip:'Powoli przechyl głowę w bok, dociśnij lekko dłonią. Barki luźno.',v:F([108,34],[...S,'100,52 86,72 84,92','100,52 120,48 112,30'])},
-{n:'Krążenia ramion',lv:1,tip:'Rób duże, spokojne koła wyprostowanymi rękami.',v:F([100,34],[...S,'100,52 70,52 48,52','100,52 130,52 152,52'],'<circle class="dsh" cx="48" cy="52" r="13"/><circle class="dsh" cx="152" cy="52" r="13"/>')},
-{n:'Triceps za głową',lv:1,sides:1,tip:'Łokieć w górę, druga dłoń delikatnie dociska go w tył.',v:F([100,34],[...S,'100,52 116,28 102,40','100,52 90,38 112,28'])},
-{n:'Skłon boczny',lv:1,sides:1,tip:'Ręka nad głową, wydłuż bok ciała. Nie skręcaj tułowia.',v:F([78,42],['100,85 86,54','100,85 90,130','100,85 110,130','86,54 84,30 62,20','86,54 100,66 106,84'])},
-{n:'Kot–krowa',lv:1,tip:'Na wydechu zaokrąglaj plecy, na wdechu je prostuj.',v:F([48,88],['60,74 80,62 100,58 120,62 140,74','60,74 60,130','140,74 140,112 172,128','60,74 52,82'])},
-{n:'Piersiowa otwarta',lv:1,tip:'Ręce za plecami, otwórz klatkę piersiową, barki w dół.',v:F([100,34],[...S,'100,56 84,80 68,74'])},
-{n:'Kolana do klatki',lv:1,tip:'Leżąc na plecach, objmij kolana i wydłuż dolny odcinek pleców.',v:F([40,117],['50,121 110,121','110,121 96,90 126,92','72,121 94,94 100,90'])},
-{n:'Pozycja dziecka',lv:1,tip:'Biodra do pięt, ręce wyciągnięte przed siebie. Oddychaj głęboko.',v:F([80,114],['150,126 102,126','102,126 140,106','140,106 92,108','92,108 50,126'])},
-{n:'Skłon do przodu',lv:2,tip:'Zegnij się w biodrach, kolana lekko miękkie, głowa luźna.',v:F([62,110],['110,70 108,130','110,70 72,96','72,96 68,130'])},
-{n:'Czworogłowy w staniu',lv:2,sides:1,tip:'Pięta do pośladka, kolana blisko siebie, biodra do przodu.',v:F([100,34],['100,45 100,85','100,85 100,130','100,85 102,110 130,100','100,52 114,76 130,100','100,52 80,60 66,50'])},
-{n:'Wypad – zginacze bioder',lv:2,sides:1,tip:'Tylne kolano nisko, biodra do przodu, tułów prosto.',v:F([100,43],['100,97 100,55','100,97 142,97 142,130','100,97 70,127 44,127','100,62 114,76 106,90'])},
-{n:'Skręt leżąc',lv:2,sides:1,tip:'Kolana opadają na bok, barki przyklejone do podłoża.',v:F([40,117],['50,121 110,121','110,121 134,96 166,121','70,121 70,102'])},
-{n:'Skłon siedząc',lv:2,tip:'Plecy proste, sięgaj do stóp. Nie zaokrąglaj na siłę.',v:F([146,88],['100,121 172,121','100,121 134,94','134,94 170,119'])},
-{n:'Pies z głową w dół',lv:3,tip:'Pięty w stronę podłogi, biodra wysoko, plecy długie.',v:F([84,98],['50,130 110,52 166,130'])},
-{n:'Głęboki przysiad',lv:3,tip:'Stopy szeroko, łokcie rozpychają kolana, plecy proste.',v:F([100,48],['100,108 62,100 72,130','100,108 138,100 128,130','100,108 100,60','100,70 86,90 100,95','100,70 114,90 100,95'])},
-{n:'Gołąb',lv:3,sides:1,tip:'Przednia noga zgięta, tylna wyciągnięta. Opuszczaj biodra powoli.',v:F([108,56],['62,127 100,119','100,119 120,110','120,110 182,127','120,110 110,72','110,76 98,102 98,127'])},
-{n:'Mostek',lv:3,tip:'Unieś biodra wysoko, ściśnij pośladki, otwórz przód ciała.',v:F([40,117],['50,121 104,82','104,82 134,92 134,130','50,121 90,125'])}
+E('Rotacje szyi',1,A,'boczne mięśnie szyi','Opuść ucho do barku i lekko dociśnij dłonią, bez ciągnięcia. Drugie ramię luźno w dół. Oddychaj spokojnie, w połowie czasu zmień stronę.',F([108,34],[104,42],[...S,'100,52 120,48 112,30','~100,52 86,72 84,92'],AR('M120 22 Q134 32 130 48'))),
+E('Skłon głowy w przód',1,A,'kark i górna część pleców','Splecione dłonie za głową delikatnie opuszczają podbródek ku klatce. Barki luźno, bez szarpania, plecy proste.',F([104,42],[100,46],[...S,'100,52 120,46 108,34','~100,52 86,72 84,92'])),
+E('Krążenia ramion',1,A,'barki i obręcz barkowa','Wyprostowane ręce rysują duże koła: pół czasu do przodu, pół do tyłu. Brzuch napięty, barki nie wędrują do uszu.',F([100,34],[100,54],[...S,'100,52 70,52 48,52','~100,52 130,52 152,52'],'<circle class="dsh" cx="48" cy="52" r="13"/><circle class="dsh" cx="152" cy="52" r="13"/>')),
+E('Triceps za głową',1,A,'tricepsy i boki tułowia','Łokieć w górę, dłoń opada za plecy. Druga ręka dociska łokieć za głowę. Nie wypychaj żeber do przodu.',F([100,34],[110,28],[...S,'100,52 116,28 102,40','~100,52 90,38 112,28']),1),
+E('Bark w poprzek',1,A,'tylna część barku','Wyprostowane ramię przyciągnij do klatki drugą ręką, dociskając nad łokciem, nie na stawie. Barki w dół.',F([100,34],[112,54],[...S,'100,54 126,54','~100,52 114,62 124,54']),1),
+E('Nadgarstki',1,A,'przedramiona i nadgarstki','Ramię proste, dłoń w dół, drugą ręką delikatnie dociągaj palce do siebie. W połowie czasu zmień na dłoń skierowaną w górę.',F([100,34],[142,56],[...S,'100,54 130,58 152,52','~100,52 120,66 148,58'])),
+E('Klatka piersiowa',1,A,'mięśnie piersiowe, przód barków','Spleć dłonie za plecami, wyprostuj ręce i unieś je lekko. Łopatki do siebie, żebra nie wystają.',F([100,34],[96,58],[...S,'100,56 84,80 68,74'])),
+E('Skłon boczny',1,B,'mięsień najszerszy, mięśnie międzyżebrowe','Jedna ręka nad głową, przechyl się w bok bez skręcania. Biodra stabilnie, oddychaj w rozciągany bok.',F([78,42],[90,64],['100,85 86,54','100,85 90,130','~100,85 110,130','86,54 84,30 62,20','~86,54 100,66 106,84'],AR('M60 14 Q46 22 46 40')),1),
+E('Sięgnij w górę',1,B,'przód tułowia, barki, boki','Wspinasz się na palce i wydłużasz ciało. Wdech w górę, wydech obniż żebra, bez wyginania lędźwi.',F([100,34],[100,60],[...S,'100,52 96,16','~100,52 106,16'])),
+E('Kot–krowa',1,B,'cały kręgosłup','Klęk podparty. Wydech: zaokrąglij plecy i opuść głowę. Wdech: wygnij plecy, wzrok przed siebie. Ruch płynny, ręce pod barkami.',F([48,88],[100,60],['60,74 80,62 100,58 120,62 140,74','60,74 60,130','140,74 140,112 172,128','60,74 52,82'])),
+E('Pozycja sfinksa',1,B,'brzuch i dolny odcinek pleców','Leżąc na brzuchu, oprzyj przedramiona pod barkami i unieś klatkę. Pośladki rozluźnione, barki z dala od uszu, patrz przed siebie.',F([68,94],[100,112],['112,122 80,108','112,122 172,122','80,108 80,122 54,122'])),
+E('Pozycja dziecka',1,B,'dolne i środkowe plecy, biodra','Biodra do pięt, ręce wyciągnięte daleko przed siebie, czoło na podłodze. Oddychaj w plecy.',F([80,114],[100,108],['140,106 92,108','150,126 102,126','102,126 140,106','92,108 50,126'])),
+E('Kolana do klatki',1,B,'dolny odcinek pleców, pośladki','Leżąc na plecach, objmij kolana i przyciągnij je do klatki. Głowa i barki na podłodze, oddychaj spokojnie.',F([40,117],[78,119],['50,121 110,121','110,121 96,90 126,92','~72,121 94,94 100,90'])),
+E('Skręt w siadzie',1,B,'plecy, boki tułowia','Siedź prosto, skręć tułów i spójrz za ramię. Skręcaj się z wydechem, nie z siłą rąk.',F([100,56],[100,92],['100,118 100,70','100,118 66,120 82,127','~100,118 134,120 116,127','100,78 80,96 114,104']),1),
+E('Motylek',1,C,'przywodziciele, wewnętrzna strona ud','Stopy złączone, kolana opadają na boki. Plecy proste, pochyl się z bioder, nie przyciskaj kolan rękami.',F([108,66],[84,112],['100,118 106,78','100,118 64,110 98,125','~100,118 136,110 102,125','104,84 130,104 136,110'])),
+E('Łydki przy ścianie',1,D,'łydki i ścięgno Achillesa','Tylna pięta dociśnięta do podłogi, noga prosta, biodra w stronę ściany. Stopy skierowane prosto.',F([130,48],[70,114],['92,86 124,56','92,86 56,130','92,86 116,108 112,130','124,58 150,58'],'<line class="gr" x1="154" y1="20" x2="154" y2="130"/>'),1),
+E('Siad płotkarski',2,D,'tył uda i pachwina','Jedna noga prosta, druga zgięta, stopa przy wewnętrznej stronie uda. Sięgaj klatką do prostej nogi z prostymi plecami, nie zaokrąglaj.',F([140,90],[130,118],['90,122 128,96','90,122 172,122','~90,122 74,108 62,124','128,98 166,118']),1),
+E('World’s greatest stretch',2,C,'zginacze bioder, pośladki, plecy, klatka','Głęboki wypad, dłoń na podłodze przy stopie. Obróć tułów i unieś rękę w górę, wzrok za dłonią. Tylna noga prosta.',F([134,66],[96,104],['96,98 122,74','96,98 140,100 140,130','~96,98 52,126','122,76 128,128','122,76 112,38'],AR('M102 40 Q122 28 134 44')),1),
+E('Kobra',2,B,'brzuch, zginacze bioder, klatka','Wyprostuj ręce i unieś klatkę, biodra przy podłodze. Barki z dala od uszu, patrz przed siebie.',F([78,82],[100,108],['112,122 84,94','112,122 172,122','84,96 84,124'])),
+E('Skręt leżąc',2,B,'plecy, pośladki, klatka','Kolana opadają na bok, ramiona szeroko, barki przyklejone do podłoża. Głowa w przeciwną stronę.',F([40,117],[120,106],['50,121 110,121','110,121 134,96 166,121','70,121 70,102']),1),
+E('Skłon do przodu',2,D,'tył ud i dolne plecy','Zegnij się w biodrach, kolana lekko miękkie, głowa i ręce luźno. Ciężar na całych stopach.',F([62,110],[108,100],['110,70 72,96','110,70 108,130','72,96 68,130'])),
+E('Czworogłowy w staniu',2,D,'przód uda','Pięta do pośladka, kolana blisko siebie, biodro do przodu. Brzuch napięty, nie wyginaj lędźwi.',F([100,34],[104,96],[...S.slice(0,2),'100,85 102,110 130,100','100,52 114,76 130,100','~100,52 80,60 66,50']),1),
+E('Wypad – zginacze bioder',2,C,'zginacze bioder, przód uda','Tylne kolano nisko, biodra do przodu, tułów prosto. Ściśnij pośladek tylnej nogi.',F([100,43],[96,100],['100,97 100,55','100,97 142,97 142,130','~100,97 70,127 44,127','100,62 114,76 106,90']),1),
+E('Skłon siedząc do stóp',2,D,'tył ud, łydki, dolne plecy','Siad z prostymi nogami, stopy zgięte. Pochyl się z prostymi plecami i chwyć podeszwy stóp; jeśli nie sięgasz, trzymaj za łydki. Kolana lekko miękkie.',F([146,88],[130,118],['100,121 134,94','100,121 172,121','134,94 170,119'])),
+E('Dwugłowy w staniu',2,D,'tył uda','Pięta wyprostowanej nogi na podłodze, pochyl tułów z prostymi plecami. Palce stopy ku górze.',F([126,48],[120,96],['92,86 120,56','92,86 90,130','~92,86 142,104','120,60 142,100']),1),
+E('Figura czwórki',2,C,'pośladki, gruszkowaty, biodra','Leżąc, kostka na kolanie, przyciągnij nogę do siebie. Głowa i barki na podłodze.',F([40,117],[114,92],['50,121 110,121','110,121 124,94 140,121','124,94 104,86','~72,121 98,98 108,90']),1),
+E('Wykrok boczny',2,C,'przywodziciele, tył uda','Ciężar na zgiętej nodze, druga prosta, stopa płasko. Plecy proste, kolano nad stopą.',F([100,42],[130,110],['100,85 100,52','100,85 66,100 58,130','~100,85 148,128','100,58 86,74 100,86']),1),
+E('Dwugłowy leżąc',2,D,'tył uda','Unieś prostą nogę, przytrzymaj za łydkę lub paskiem. Druga noga i plecy na podłodze.',F([40,117],[122,92],['50,121 110,121','~110,121 170,121','110,121 128,56','72,121 100,98 124,62']),1),
+E('Pies z głową w dół',2,D,'łydki, tył ud, barki, plecy','Dłonie szeroko, biodra wysoko, pięty dążą do podłogi. Plecy proste, głowa między ramionami.',F([86,104],[140,100],['82,80 110,52','82,80 50,130','110,52 166,130'])),
+E('Głęboki przysiad',3,C,'biodra, pachwiny, kostki','Stopy szeroko, łokcie rozpychają kolana, plecy proste. Pięty zostają na podłodze.',F([100,48],[100,108],['100,108 100,60','100,108 62,100 72,130','~100,108 138,100 128,130','100,70 86,90 100,95','~100,70 114,90 100,95'])),
+E('Gołąb',3,C,'pośladki, gruszkowaty, zginacze bioder','Przednia noga zgięta, tylna wyciągnięta. Biodra opuszczaj powoli, tułów prosto lub w skłonie.',F([108,56],[110,112],['120,110 110,72','62,127 100,119','100,119 120,110','~120,110 182,127','110,76 98,102 98,127']),1),
+E('Mostek',3,B,'przód ciała, klatka, zginacze bioder','Unieś biodra wysoko, ściśnij pośladki, otwórz przód ciała. Kolana równolegle.',F([40,117],[100,88],['50,121 104,82','104,82 134,92 134,130','50,121 90,125'])),
+E('Szpagat siedząc',3,C,'przywodziciele, tył ud','Nogi szeroko, plecy proste, sięgaj rękami przed siebie. Stopy zgięte, kolana ku górze.',F([100,72],[70,120],['100,120 100,84','100,120 42,124','~100,120 158,124','100,88 70,108 50,122']))
 ];
 const LV=[{n:'Łatwy',t:20},{n:'Średni',t:30},{n:'Trudny',t:40}];
 const LN=[{n:'Krótka',c:6},{n:'Średnia',c:10},{n:'Długa',c:16}];
-const REST=3;
+const ht=lv=>Math.max(10,LV[lv].t+cfg.off);
 const $=id=>document.getElementById(id);
-const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let cfg=store.get('stretch.cfg',{lv:0,ln:1,snd:true});
+const idb={
+  db(){return new Promise(r=>{try{const q=indexedDB.open('stretch',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)}catch(e){r(null)}})},
+  async put(k,v){const d=await this.db();if(d)try{d.transaction('kv','readwrite').objectStore('kv').put(JSON.stringify(v),k)}catch(e){}},
+  async get(k){const d=await this.db();return new Promise(r=>{if(!d)return r();try{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>r(q.result?JSON.parse(q.result):undefined);q.onerror=()=>r()}catch(e){r()}})}
+};
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}idb.put(k,v)}};
+let cfg=Object.assign({lv:0,ln:1,snd:true,vol:.7,sty:0,rest:3,off:0,grp:[],voice:false,wake:true,mode:'auto',pal:'lagoon',goal:30,days:[1,3,5],fm:'more',fav:['World’s greatest stretch','Siad płotkarski','Pozycja sfinksa','Pies z głową w dół','Skłon siedząc do stóp']},store.get('stretch.cfg',{}));
 let plan=[];
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const fmt=s=>{const m=Math.round(s/60);return m<1?'<1 min':m+' min'};
-const estSec=(lv,ln)=>LN[ln].c*(LV[lv].t+REST);
+const estSec=(lv,ln)=>LN[ln].c*(ht(lv)+cfg.rest);
 
 function build(){
   const lo=cfg.lv===2?2:1, hi=cfg.lv===0?1:cfg.lv===1?2:3;
-  const pool=EX.filter(e=>e.lv>=lo&&e.lv<=hi);
+  let pool=EX.filter(e=>e.lv>=lo&&e.lv<=hi);
+  if(cfg.grp.length){const g=pool.filter(e=>cfg.grp.includes(e.g));if(g.length>=3)pool=g}
+  const fv=EX.filter(e=>cfg.fav.includes(e.n));
+  if(cfg.fm==='only'&&fv.length>=2)pool=fv;else if(cfg.fm==='more')pool=[...new Set([...pool,...fv])];
   const N=LN[cfg.ln].c;plan=[];let q=shuffle(pool),last=null;
   while(plan.length<N){
     if(!q.length)q=shuffle(pool);
@@ -204,24 +272,85 @@ function build(){
     else plan.push({e});
   }
 }
+function weekRow(){
+  const done=new Set(calc().s.map(x=>dk(x.t))),now=new Date(),mo=new Date(now);
+  mo.setDate(now.getDate()-((now.getDay()+6)%7));
+  let h='',pl=0,dn=0;
+  for(let i=0;i<7;i++){
+    const d=new Date(mo);d.setDate(mo.getDate()+i);
+    const w=cfg.days.includes(d.getDay()),ok=done.has(dk(d)),td=dk(d)===dk(now);
+    if(w){pl++;if(ok)dn++}
+    h+=`<div class="${ok?'ok':w?(d<now&&!td?'ms':'pl'):''}${td?' td':''}"><small>${['Nd','Pn','Wt','Śr','Cz','Pt','Sb'][d.getDay()]}</small><b>${ok?'✓':w?'•':''}</b></div>`;
+  }
+  $('wk').innerHTML=h;return dn+' / '+pl;
+}
 function renderHome(){
-  $('lvSeg').innerHTML=LV.map((l,i)=>`<button aria-pressed="${i===cfg.lv}" data-lv="${i}"><b>${l.n}</b><small>${l.t} s / ćw.</small></button>`).join('');
+  $('lvSeg').innerHTML=LV.map((l,i)=>`<button aria-pressed="${i===cfg.lv}" data-lv="${i}"><b>${l.n}</b><small>${ht(i)} s / ćw.</small></button>`).join('');
   $('lnSeg').innerHTML=LN.map((l,i)=>`<button aria-pressed="${i===cfg.ln}" data-ln="${i}"><b>${l.n}</b><small>ok. ${fmt(estSec(cfg.lv,i))}</small></button>`).join('');
-  $('plan').innerHTML=plan.map(p=>`<div class="row"><div class="th">${p.e.v}</div><div class="nm"><b>${p.e.n}</b><span>${p.side||'obie strony naraz'}</span></div><div class="sec">${LV[cfg.lv].t} s</div></div>`).join('');
+  $('plan').innerHTML=plan.map(p=>`<div class="row"><div class="th">${p.e.v}</div><div class="nm"><b>${p.e.n}</b><span>${p.e.m}${p.side?' · '+p.side:''}</span></div><button class="hv" data-i="${EX.indexOf(p.e)}" aria-label="Ulubione">${cfg.fav.includes(p.e.n)?'♥':'♡'}</button><div class="sec">${ht(cfg.lv)} s</div></div>`).join('');
+  {const c={};plan.forEach(p=>c[p.e.g]=(c[p.e.g]||0)+1);$('pmap').innerHTML='<h2>Co rozciągasz w tym planie</h2>'+bodyMap(c)}
   $('go').textContent=`Start · ${fmt(estSec(cfg.lv,cfg.ln))}`;
-  const st=calc();$('hi').textContent=st.streak>0?`Seria: ${st.streak} ${st.streak===1?'dzień':'dni'} z rzędu 🔥`:'Wybierz plan i zacznij.';
+  const st=calc();$('wkp').textContent='Plan tygodnia: '+weekRow()+' dni';
+  $('hi').textContent=st.streak>0?`Seria: ${st.streak} ${st.streak===1?'dzień':'dni'} z rzędu 🔥`:'Wybierz plan i zacznij.';
 }
 $('lvSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;cfg.lv=+b.dataset.lv;store.set('stretch.cfg',cfg);build();renderHome()};
 $('lnSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;cfg.ln=+b.dataset.ln;store.set('stretch.cfg',cfg);build();renderHome()};
 $('shuf').onclick=()=>{build();renderHome()};
+$('plan').onclick=e=>{const b=e.target.closest('.hv');if(!b)return;const n=EX[+b.dataset.i].n,k=cfg.fav.indexOf(n);k<0?cfg.fav.push(n):cfg.fav.splice(k,1);store.set('stretch.cfg',cfg);renderHome()};
 
 /* tabs */
 function tab(n){
-  $('home').hidden=n!==1;$('stats').hidden=n!==2;$('cta').style.display=n===1?'':'none';
-  $('t1').setAttribute('aria-selected',n===1);$('t2').setAttribute('aria-selected',n===2);
-  if(n===2)renderStats();else renderHome();scrollTo(0,0);
+  $('home').hidden=n!==1;$('stats').hidden=n!==2;$('setp').hidden=n!==3;$('cta').style.display=n===1?'':'none';
+  [1,2,3].forEach(i=>$('t'+i).setAttribute('aria-selected',i===n));
+  n===2?renderStats():n===3?renderSet():renderHome();scrollTo(0,0);
 }
-$('t1').onclick=()=>tab(1);$('t2').onclick=()=>tab(2);
+[1,2,3].forEach(i=>$('t'+i).onclick=()=>tab(i));
+
+/* settings + theme */
+const PN={lagoon:'Laguna',sunset:'Zachód',lavender:'Lawenda',forest:'Las'},PC={lagoon:'#0F8F8B',sunset:'#D9480F',lavender:'#6B4EF0',forest:'#2F7D45'};
+const sg=(k,it,cur)=>`<div class="seg" style="grid-template-columns:repeat(${it.length},1fr)">${it.map(([l,v])=>`<button data-k="${k}" data-v="${v}" aria-pressed="${cur===v}"><b>${l}</b></button>`).join('')}</div>`;
+const sw=(k,l,sub)=>`<button class="sw" data-tg="${k}" aria-pressed="${!!cfg[k]}"><span><b>${l}</b><small>${sub}</small></span><i></i></button>`;
+function renderSet(){
+  $('setBody').innerHTML=`<h2>Poziom</h2>${sg('lv',LV.map((l,i)=>[l.n,i]),cfg.lv)}
+  <h2>Długość treningu</h2>${sg('ln',LN.map((l,i)=>[l.n,i]),cfg.ln)}
+  <h2>Czas ćwiczenia</h2>${sg('off',[['−10 s',-10],['Standard',0],['+10 s',10]],cfg.off)}
+  <h2>Przerwa między ćwiczeniami</h2>${sg('rest',[['3 s',3],['5 s',5],['10 s',10]],cfg.rest)}
+  <h2>Partie ciała (bez wyboru = wszystkie)</h2><div class="chips">${GR.map(g=>`<button data-g="${g}" aria-pressed="${cfg.grp.includes(g)}">${g}</button>`).join('')}</div>
+  <h2>Ulubione (♥ przy ćwiczeniu w planie): ${cfg.fav.length}</h2>${sg('fm',[['Wyłączone','off'],['Dodaj do puli','more'],['Tylko ulubione','only']],cfg.fm)}
+  <h2>Dźwięk</h2>${sw('snd','Efekty dźwiękowe','Odliczanie, start i koniec ćwiczenia')}
+  <div class="panel" style="margin:8px 0"><b>Głośność</b><input class="rg" type="range" min=".1" max="1" step=".1" value="${cfg.vol}" data-r="1"></div>
+  ${sg('sty',[['Miękki',0],['Drewniany',1],['Cyfrowy',2]],cfg.sty)}
+  ${sw('voice','Głos czyta ćwiczenia','Podaje nazwę kolejnego ćwiczenia')}
+  <h2>Wygląd</h2>${sg('mode',[['Auto','auto'],['Jasny','light'],['Ciemny','dark']],cfg.mode)}
+  <div class="pal">${Object.keys(PN).map(k=>`<button data-k="pal" data-v="${k}" aria-pressed="${cfg.pal===k}" style="--c:${PC[k]}"><i></i>${PN[k]}</button>`).join('')}</div>
+  <h2>Plan tygodniowy – dni treningowe</h2><div class="chips">${[[1,'Pn'],[2,'Wt'],[3,'Śr'],[4,'Cz'],[5,'Pt'],[6,'Sb'],[0,'Nd']].map(([n,l])=>`<button data-d="${n}" aria-pressed="${cfg.days.includes(n)}">${l}</button>`).join('')}</div>
+  <h2>Cel tygodniowy</h2>${sg('goal',[['10 min',10],['30 min',30],['60 min',60]],cfg.goal)}
+  <h2>Ekran</h2>${sw('wake','Nie gaś ekranu','W trakcie treningu')}
+  <h2>Dane</h2><div class="seg" style="grid-template-columns:1fr 1fr"><button id="ex"><b>Eksportuj kopię</b><small>plik .json</small></button><button id="im"><b>Importuj kopię</b><small>połączy dane</small></button></div>
+  <p class="sub" style="margin-top:8px">Dane są zapisywane automatycznie dwa razy (pamięć + IndexedDB) i odtwarzane, jeśli Safari coś wyczyści.</p>
+  <button class="danger" id="rs2">Wyczyść statystyki</button>`;
+}
+$('setBody').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.k)cfg[d.k]=isNaN(+d.v)?d.v:+d.v;
+  else if(d.tg)cfg[d.tg]=!cfg[d.tg];
+  else if(d.d!==undefined){const n=+d.d,i=cfg.days.indexOf(n);i<0?cfg.days.push(n):cfg.days.splice(i,1)}
+  else if(d.g){const i=cfg.grp.indexOf(d.g);i<0?cfg.grp.push(d.g):cfg.grp.splice(i,1)}
+  else if(b.id==='ex'){exp();return}
+  else if(b.id==='im'){$('imp').click();return}
+  else if(b.id==='rs2'){if(confirm('Na pewno usunąć wszystkie statystyki?'))store.set('stretch.data',{s:[]});return}
+  else return;
+  store.set('stretch.cfg',cfg);applyTheme();build();renderSet();
+  if(d.k==='sty'||d.tg==='snd'){initAudio();sfx.go()}
+};
+$('setBody').oninput=e=>{if(e.target.dataset.r){cfg.vol=+e.target.value;store.set('stretch.cfg',cfg)}};
+$('setBody').onchange=e=>{if(e.target.dataset.r){initAudio();sfx.tick()}};
+function applyTheme(){
+  const dk=cfg.mode==='auto'?matchMedia('(prefers-color-scheme:dark)').matches:cfg.mode==='dark';
+  const r=document.documentElement;r.dataset.t=dk?'dark':'light';r.dataset.p=cfg.pal;
+  document.querySelector('meta[name=theme-color]').content=dk?'#10141F':'#EDEFF7';
+}
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',applyTheme);
 
 /* audio */
 let ac=null;
@@ -229,8 +358,8 @@ function initAudio(){try{ac=ac||new (window.AudioContext||window.webkitAudioCont
 function tone(f,d=.12,v=.2,type='sine',w=0){
   if(!cfg.snd||!ac)return;
   const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+w;
-  o.type=type;o.frequency.value=f;
-  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.type=['sine','triangle','square'][cfg.sty];o.frequency.value=f;
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.001,v*cfg.vol*(cfg.sty==2?.4:1)),t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);
   o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d+.05);
 }
 const sfx={
@@ -245,24 +374,25 @@ $('snd').onclick=()=>{cfg.snd=!cfg.snd;store.set('stretch.cfg',cfg);sndBtn();ini
 
 /* session */
 let ses=null,timer=null,wl=null;
-const hold=()=>LV[ses.lv].t;
-async function lock(){try{if(navigator.wakeLock)wl=await navigator.wakeLock.request('screen')}catch(e){}}
+const hold=()=>ht(ses.lv);
+async function lock(){try{if(cfg.wake&&navigator.wakeLock)wl=await navigator.wakeLock.request('screen')}catch(e){}}
 function unlock(){try{wl&&wl.release()}catch(e){}wl=null}
 document.addEventListener('visibilitychange',()=>{if(ses&&document.visibilityState==='visible')lock()});
 
 function startSession(){
   initAudio();lock();sndBtn();
-  ses={steps:plan.slice(),i:0,lv:cfg.lv,ln:cfg.ln,done:0,work:0,paused:false};
+  ses={steps:plan.slice(),i:0,lv:cfg.lv,ln:cfg.ln,done:0,work:0,paused:false,gc:{}};
   $('ses').classList.add('on');
   phase('rest');
   timer=setInterval(tick,100);
 }
 function phase(ph){
-  ses.ph=ph;ses.dur=ph==='rest'?REST:hold();ses.end=Date.now()+ses.dur*1000;ses.last=null;
+  ses.ph=ph;ses.dur=ph==='rest'?cfg.rest:hold();ses.end=Date.now()+ses.dur*1000;ses.last=null;
   const s=ses.steps[ses.i],n=ses.steps.length;
-  $('art').innerHTML=s.e.v;
+  $('art').innerHTML=s.e.v+'<div class="mm">'+bodySvg({[s.e.g]:1},34,86)+'</div>';
   $('sn').textContent=s.e.n+(s.side?' – '+s.side:'');
-  $('st').textContent=s.e.tip;
+  $('st').textContent=s.e.tip;$('sm').textContent='Rozciągasz: '+s.e.m;
+  if(ph==='rest')say(s.e.n+(s.side?', '+s.side:''));
   $('pg').textContent=`${ses.i+1} / ${n}`;
   $('pb').style.width=(ses.done/n*100)+'%';
   const p=$('pill');p.textContent=ph==='rest'?'Przygotuj się':'Rozciągaj';p.className='pill'+(ph==='rest'?' rest':'');
@@ -274,6 +404,7 @@ function upd(left){
   $('num').textContent=Math.max(0,Math.ceil(left));
   $('rg').style.strokeDashoffset=326.7*(1-Math.max(0,left)/ses.dur);
 }
+function say(t){if(!cfg.voice||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pl-PL';u.volume=cfg.vol;speechSynthesis.speak(u)}catch(e){}}
 function tick(){
   if(!ses||ses.paused)return;
   const left=(ses.end-Date.now())/1000,sec=Math.ceil(left);
@@ -287,7 +418,7 @@ function tick(){
 function leaveWork(){ses.work+=ses.dur-Math.max(0,(ses.end-Date.now())/1000)}
 function advance(skipped){
   if(ses.ph==='rest'){phase('work');return}
-  leaveWork();if(!skipped)ses.done++;
+  leaveWork();if(!skipped){ses.done++;const g=ses.steps[ses.i].e.g;ses.gc[g]=(ses.gc[g]||0)+1}
   if(ses.i+1>=ses.steps.length){finish();return}
   if(!skipped)sfx.end();
   ses.i++;phase('rest');
@@ -301,15 +432,17 @@ $('pau').onclick=()=>{
 $('x').onclick=()=>{if(!ses)return;if(ses.ph==='work')leaveWork();ses.done>0?finish(true):close()};
 function close(){clearInterval(timer);unlock();ses=null;$('ses').classList.remove('on')}
 function finish(partial){
-  const r={t:Date.now(),sec:Math.round(ses.work),n:ses.done,lv:ses.lv,ln:ses.ln};
+  const r={t:Date.now(),sec:Math.round(ses.work),n:ses.done,lv:ses.lv,ln:ses.ln,gc:ses.gc};
   if(!partial)sfx.done();
+  const before=new Set(got(calc()).map(b=>b.n));
   const d=store.get('stretch.data',{s:[]});d.s.push(r);store.set('stretch.data',d);
+  const nb=got(calc()).filter(b=>!before.has(b.n));
   close();
   const st=calc();
   $('dstats').innerHTML=`<div class="stat"><b>${fmtT(r.sec)}</b><span>czas rozciągania</span></div>
   <div class="stat"><b>${r.n}</b><span>ćwiczeń</span></div>
   <div class="stat"><b>${st.streak}</b><span>dni z rzędu</span></div>
-  <div class="stat"><b>${st.n}</b><span>treningów łącznie</span></div>`;
+  <div class="stat"><b>${st.n}</b><span>treningów łącznie</span></div>${nb.length?`<div class="panel" style="grid-column:1/3;text-align:center"><b>Nowa odznaka!</b><br>${nb.map(b=>b.i+' '+b.n).join('<br>')}</div>`:''}`;
   $('done').classList.add('on');
 }
 $('dok').onclick=()=>{$('done').classList.remove('on');tab(1)};
@@ -325,8 +458,39 @@ function calc(){
   if(!days.has(dk(d)))d.setDate(d.getDate()-1);
   while(days.has(dk(d))){streak++;d.setDate(d.getDate()-1)}
   const sec=s.reduce((a,x)=>a+x.sec,0),ex=s.reduce((a,x)=>a+x.n,0);
-  return{s,n:s.length,sec,ex,streak,days:days.size};
+  const ds=[...new Set(s.map(x=>{const q=new Date(x.t);q.setHours(0,0,0,0);return+q}))].sort((a,b)=>a-b);
+  let best=0,run=0;ds.forEach((t,i)=>{run=i&&Math.round((t-ds[i-1])/864e5)===1?run+1:1;best=Math.max(best,run)});
+  const wk={};s.forEach(x=>{const q=new Date(x.t);q.setHours(0,0,0,0);q.setDate(q.getDate()-((q.getDay()+6)%7));wk[+q]=(wk[+q]||0)+x.sec});
+  return{s,n:s.length,sec,ex,streak,days:days.size,best,maxWk:Math.max(0,...Object.values(wk)),lv:new Set(s.map(x=>x.lv)).size};
 }
+let selMode=false;const sel=new Set();
+function bodySvg(c,w,h){
+  const mx=Math.max(1,...GR.map(g=>c[g]||0));
+  const f=g=>{const v=c[g]||0;return v?`fill="var(--accent)" fill-opacity="${(.35+.65*v/mx).toFixed(2)}"`:'fill="var(--line)"'};
+  return `<svg viewBox="0 0 80 200" style="width:${w}px;height:${h}px;flex:none" aria-hidden="true"><circle cx="40" cy="15" r="11" fill="var(--line)"/>
+<g ${f(A)}><rect x="34" y="26" width="12" height="9" rx="3"/><rect x="12" y="34" width="56" height="14" rx="7"/><rect x="6" y="42" width="11" height="46" rx="5.5"/><rect x="63" y="42" width="11" height="46" rx="5.5"/></g>
+<g ${f(B)}><rect x="21" y="48" width="38" height="44" rx="10"/></g>
+<g ${f(C)}><rect x="21" y="93" width="38" height="17" rx="8"/></g>
+<g ${f(D)}><rect x="21" y="112" width="17" height="46" rx="8"/><rect x="42" y="112" width="17" height="46" rx="8"/><rect x="22" y="161" width="14" height="36" rx="7"/><rect x="44" y="161" width="14" height="36" rx="7"/></g></svg>`;
+}
+function bodyMap(c){
+  const mx=Math.max(1,...GR.map(g=>c[g]||0));
+  return `<div class="panel" style="display:flex;gap:18px;align-items:center">${bodySvg(c,84,210)}<div style="flex:1">${GR.map(g=>`<div class="lv"><span style="width:92px;font-size:13px">${g}</span><div class="tr"><i style="width:${(c[g]||0)/mx*100}%"></i></div><em>${c[g]||0}</em></div>`).join('')}</div></div>`;
+}
+const BG=[
+{i:'🌱',n:'Pierwszy krok',d:'1 trening',f:c=>c.n>=1},
+{i:'🔥',n:'Trzy dni',d:'3 dni z rzędu',f:c=>c.best>=3},
+{i:'⚡',n:'Tydzień',d:'7 dni z rzędu',f:c=>c.best>=7},
+{i:'🌟',n:'Dwa tygodnie',d:'14 dni z rzędu',f:c=>c.best>=14},
+{i:'👑',n:'Miesiąc',d:'30 dni z rzędu',f:c=>c.best>=30},
+{i:'🏅',n:'Rozkręcony',d:'10 treningów',f:c=>c.n>=10},
+{i:'🥈',n:'Stały bywalec',d:'25 treningów',f:c=>c.n>=25},
+{i:'🥇',n:'Mistrz',d:'50 treningów',f:c=>c.n>=50},
+{i:'⏱️',n:'Godzina',d:'60 min łącznie',f:c=>c.sec>=3600},
+{i:'🕰️',n:'Pięć godzin',d:'300 min łącznie',f:c=>c.sec>=18000},
+{i:'🎯',n:'Cel tygodnia',d:'zrealizowany cel',f:c=>c.maxWk>=cfg.goal*60},
+{i:'🧘',n:'Wszechstronny',d:'wszystkie poziomy',f:c=>c.lv>=3}];
+const got=c=>BG.filter(b=>b.f(c));
 function renderStats(){
   const st=calc(),el=$('statsBody');
   if(!st.n){el.innerHTML='<p class="empty">Brak treningów. Zrób pierwszy, a tutaj pojawią się Twoje wyniki.</p>';return}
@@ -349,17 +513,51 @@ function renderStats(){
     <div class="stat"><b>${fmtT(Math.round(st.sec/st.n))}</b><span>średnio na trening</span></div>
     <div class="stat"><b>${st.days}</b><span>aktywnych dni</span></div>
   </div>
-  <h2>Ostatnie 7 dni · ${Math.round(wkTotal)} min</h2>
+  <h2>Cel tygodniowy · ${Math.round(wkTotal)} / ${cfg.goal} min</h2>
+  <div class="panel" style="margin-bottom:8px"><div class="lv" style="margin:0"><div class="tr"><i style="width:${Math.min(100,wkTotal/cfg.goal*100)}%"></i></div><em style="width:44px">${Math.min(100,Math.round(wkTotal/cfg.goal*100))}%</em></div></div>
   <div class="panel"><div class="bars">${bars.map(b=>`<div class="${b.m?'':'zero'}"><i style="height:${Math.max(4,b.m/mx*88)}%"></i><small>${b.l}</small></div>`).join('')}</div></div>
+  <h2>Mapa rozciągania · 30 dni</h2>
+  ${(()=>{const gc={},lim=Date.now()-30*864e5;st.s.forEach(x=>{if(x.gc&&x.t>lim)for(const g in x.gc)gc[g]=(gc[g]||0)+x.gc[g]});return Object.keys(gc).length?bodyMap(gc):'<p class="empty">Mapa pojawi się po kolejnym treningu.</p>'})()}
   <h2>Poziomy trudności</h2>
   <div class="panel">${LV.map((l,i)=>`<div class="lv"><span>${l.n}</span><div class="tr"><i style="width:${lvC[i]/lm*100}%"></i></div><em>${lvC[i]}</em></div>`).join('')}</div>
-  <h2>Historia</h2>
-  <div class="panel">${last.map(x=>{const d=new Date(x.t);return`<div class="hist"><b>${d.getDate()} ${dn[d.getMonth()]}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}</b><span>${x.n} ćw. · ${fmtT(x.sec)} · ${LV[x.lv].n}</span></div>`}).join('')}</div>
+  <h2>Odznaki · ${got(st).length}/${BG.length}</h2>
+  <div class="bd">${BG.map(b=>`<div class="${b.f(st)?'on':''}"><i>${b.i}</i><b>${b.n}</b><small>${b.d}</small></div>`).join('')}</div>
+  <div class="hdr"><h2>Historia</h2>${selMode?'':'<button class="ghost" id="hsel">Wybierz</button>'}</div>
+  <div class="panel" id="hl" style="max-height:380px;overflow-y:auto">${st.s.slice().reverse().map(x=>{const d=new Date(x.t);return`<div class="hist" data-t="${x.t}"><b>${selMode?`<span class="ck">${sel.has(x.t)?'☑':'☐'}</span> `:''}${d.getDate()} ${dn[d.getMonth()]}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}</b><span>${x.n} ćw. · ${fmtT(x.sec)} · ${LV[x.lv].n}</span></div>`}).join('')}</div>
+  ${selMode?`<div class="seg" style="grid-template-columns:1fr 1fr 1fr;margin-top:10px"><button id="hall"><b>Wszystkie</b></button><button id="hdel"><b>Usuń (${sel.size})</b></button><button id="hno"><b>Anuluj</b></button></div>`:''}
   <button class="danger" id="rst">Wyczyść statystyki</button>`;
-  $('rst').onclick=()=>{if(confirm('Na pewno usunąć wszystkie statystyki?')){store.set('stretch.data',{s:[]});renderStats()}};
+  $('rst').onclick=()=>{if(confirm('Na pewno usunąć wszystkie statystyki?')){store.set('stretch.data',{s:[]});selMode=false;renderStats()}};
+  if($('hsel'))$('hsel').onclick=()=>{selMode=true;sel.clear();renderStats()};
+  if(selMode){
+    $('hl').onclick=e=>{const r=e.target.closest('.hist');if(!r)return;const t=+r.dataset.t,y=$('hl').scrollTop;sel.has(t)?sel.delete(t):sel.add(t);renderStats();$('hl').scrollTop=y};
+    $('hall').onclick=()=>{sel.size===st.s.length?sel.clear():st.s.forEach(x=>sel.add(x.t));renderStats()};
+    $('hno').onclick=()=>{selMode=false;sel.clear();renderStats()};
+    $('hdel').onclick=()=>{if(!sel.size)return;if(confirm('Usunąć zaznaczone sesje ('+sel.size+')?')){const d=store.get('stretch.data',{s:[]});d.s=d.s.filter(x=>!sel.has(x.t));store.set('stretch.data',d);sel.clear();selMode=false;renderStats()}};
+  }
 }
 
-build();renderHome();
+async function exp(){
+  const f=new File([JSON.stringify({v:1,cfg,data:store.get('stretch.data',{s:[]})})],'stretch-kopia-'+dk(Date.now())+'.json',{type:'application/json'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;a.click();
+}
+$('imp').onchange=async e=>{
+  const f=e.target.files[0];e.target.value='';if(!f)return;
+  try{
+    const d=JSON.parse(await f.text()),cur=store.get('stretch.data',{s:[]}),seen=new Set(cur.s.map(x=>x.t));
+    let add=0;(d.data&&d.data.s||[]).forEach(x=>{if(!seen.has(x.t)){cur.s.push(x);add++}});
+    cur.s.sort((a,b)=>a.t-b.t);store.set('stretch.data',cur);
+    if(d.cfg){cfg=Object.assign(cfg,d.cfg);store.set('stretch.cfg',cfg)}
+    applyTheme();build();renderSet();alert('Zaimportowano treningów: '+add);
+  }catch(x){alert('Nie udało się wczytać pliku.')}
+};
+(async()=>{
+  try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+  let ch=0;
+  for(const k of ['stretch.data','stretch.cfg']){if(!localStorage.getItem(k)){const v=await idb.get(k);if(v){try{localStorage.setItem(k,JSON.stringify(v));ch=1}catch(e){}}}}
+  if(ch){cfg=Object.assign(cfg,store.get('stretch.cfg',{}));applyTheme();build();renderHome()}
+})();
+applyTheme();build();renderHome();
 </script>
 </body>
 </html>
