@@ -48,7 +48,7 @@ h2{font-size:15px;margin:22px 0 10px;color:var(--mute);font-weight:600}
 .cta button{display:block;width:100%;max-width:484px;margin:0 auto;background:var(--accent);color:var(--accent-ink);
   border-radius:22px;padding:18px;font-size:19px;font-weight:700;box-shadow:0 6px 18px color-mix(in srgb,var(--accent) 30%,transparent)}
 .cta button:active,.big:active{transform:scale(.98)}
-.tabs{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);background:var(--card);
+.tabs{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);
   border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:6}
 .tabs button{padding:12px 0 10px;font-size:13px;color:var(--mute);font-weight:600}
 .tabs button[aria-selected=true]{color:var(--accent)}
@@ -97,6 +97,8 @@ svg{display:block;width:100%;height:100%}
 .art{position:relative}.mm{position:absolute;top:10px;right:12px}
 .hist .ck{color:var(--accent);margin-right:4px}
 .logo{display:block;width:120px;height:120px;border-radius:28px;margin:0 auto 10px}
+.srch{width:100%;margin-top:10px;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;-webkit-user-select:text;user-select:text}
+.lr{margin-bottom:8px}.lr .row{margin-bottom:0}.lr .dt{background:var(--card);border-radius:18px;padding:6px 12px 12px;margin-top:6px}
 #sm{color:var(--accent);font-weight:700;font-size:14px;margin:0}
 @keyframes pz{50%{opacity:.8;transform:scale(1.25)}}
 .dsh{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:4 5}
@@ -162,11 +164,13 @@ svg{display:block;width:100%;height:100%}
   <div id="statsBody"></div>
 </main>
 
+<main class="page" id="libp" hidden><h1>Ćwiczenia</h1><p class="sub" id="libsum"></p><div id="libBody"></div></main>
 <main class="page" id="setp" hidden><h1>Ustawienia</h1><div id="setBody"></div><input type="file" id="imp" accept=".json,application/json" hidden></main>
 
 <div class="cta" id="cta"><button id="go">Start</button></div>
 <nav class="tabs">
   <button id="t1" aria-selected="true"><i>🧘</i>Trening</button>
+  <button id="t4" aria-selected="false"><i>📚</i>Ćwiczenia</button>
   <button id="t2" aria-selected="false"><i>📊</i>Statystyki</button>
   <button id="t3" aria-selected="false"><i>⚙️</i>Ustawienia</button>
 </nav>
@@ -207,15 +211,15 @@ const F=(h,z,L,x='')=>{const l=L.map((p,i)=>({f:p[0]==='~',t:!i,p:p.replace('~',
 return `<svg viewBox="0 0 200 140" aria-hidden="true"><defs><marker id="ah" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0,0L7,3.5L0,7z" style="fill:var(--accent)"/></marker></defs>${h[1]>=80?'<rect class="mat" x="16" y="130" width="168" height="7" rx="3.5"/>':'<ellipse class="mat" cx="100" cy="132" rx="34" ry="4"/>'}<line class="gr" x1="12" y1="130" x2="188" y2="130"/>${x}<circle class="zn" cx="${z[0]}" cy="${z[1]}" r="15"/><g class="fg">${l.filter(a=>a.f).concat(l.filter(a=>!a.f)).map(a=>`<polyline class="${a.t?'tr':a.f?'fr':''}" points="${a.p}"/>`).join('')}</g>${l.filter(a=>!a.t).map(a=>{const q=a.p.split(' ').pop().split(',');return `<circle class="cp${a.f?' fr':''}" cx="${q[0]}" cy="${q[1]}" r="5"/>`}).join('')}<circle class="hd" cx="${h[0]}" cy="${h[1]}" r="10"/></svg>`};
 const AR=d=>`<path class="ar" d="${d}" marker-end="url(#ah)"/>`;
 const S=['100,45 100,85','100,85 90,130','~100,85 112,130'];
-const A='Szyja i barki',B='Plecy',C='Biodra',D='Nogi',GR=[A,B,C,D];
-const Q='Uda – przód',H='Uda – tył',L='Łydki',REGS=[A,B,C,Q,H,L];
-const RG={'Łydki przy ścianie':[L],'Skłon do przodu':[H,L],'Czworogłowy w staniu':[Q],'Skłon siedząc do stóp':[H,L],'Dwugłowy w staniu':[H],'Dwugłowy leżąc':[H],'Pies z głową w dół':[H,L],'Siad płotkarski':[H],'Wypad – zginacze bioder':[C,Q],'Wykrok boczny':[C,H],'Szpagat siedząc':[C,H],'World\u2019s greatest stretch':[C,Q,B],'Mostek':[B,Q],'Głęboki przysiad':[C,L],'Zwis na drążku':[A,B],'Zwis ze skrętem':[B,C],'Zwis jednorącz':[A,B]};
+const N='Szyja',A='Ręce i ramiona',B='Plecy',C='Biodra',D='Nogi',GR=[N,A,B,C,D];
+const Q='Uda – przód',H='Uda – tył',L='Łydki',REGS=[N,A,B,C,Q,H,L];
+const RG={'Łydki przy ścianie':[L],'Skłon do przodu':[H,L],'Czworogłowy w staniu':[Q],'Skłon siedząc do stóp':[H,L],'Dwugłowy w staniu':[H],'Dwugłowy leżąc':[H],'Pies z głową w dół':[H,L],'Siad płotkarski':[H],'Wypad – zginacze bioder':[C,Q],'Wykrok boczny':[C,H],'Szpagat siedząc':[C,H],'World\u2019s greatest stretch':[C,Q,B],'Mostek':[B,Q],'Głęboki przysiad':[C,L],'Zwis na drążku':[A,B],'Zwis ze skrętem':[B,C],'Zwis jednorącz':[A,B],'Zwis na szerokim chwycie':[A,B],'Objęcie górnych pleców':[B,A],'Gwiazda leżąc':[B,C],'Skłon w rozkroku stojąc':[H,C],'Trójkąt':[B,H],'Nić igły':[B,A],'Pozycja żaby':[C],'Pozycja bohatera':[Q],'Opuszczanie pięt na stopniu':[L],'Czworogłowy leżąc na boku':[Q],'Klatka w drzwiach':[A,B],'Wzruszenia barków':[A,N],'Łydki w wykroku':[L],'Nogi na ścianie':[H,L],'Dwugłowy na krześle':[H],'Piramida':[H,L],'Czworogłowy przy ścianie':[Q,C],'Wymachy nogi':[H,Q],'Półszpagat':[H],'Pozycja szczeniaka':[A,B],'Ramiona i plecy przy ścianie':[A,B]};
 const regs=e=>RG[e.n]||[e.g];
 const BAR='<line class="bar" x1="40" y1="14" x2="160" y2="14"/>';
 const E=(n,lv,g,m,tip,v,sides,bar)=>({n,lv,g,m,tip,v,sides,bar});
 const EX=[
-E('Rotacje szyi',1,A,'boczne mięśnie szyi','Opuść ucho do barku i lekko dociśnij dłonią, bez ciągnięcia. Drugie ramię luźno w dół. Oddychaj spokojnie, w połowie czasu zmień stronę.',F([108,34],[104,42],[...S,'100,52 120,48 112,30','~100,52 86,72 84,92'],AR('M120 22 Q134 32 130 48'))),
-E('Skłon głowy w przód',1,A,'kark i górna część pleców','Splecione dłonie za głową delikatnie opuszczają podbródek ku klatce. Barki luźno, bez szarpania, plecy proste.',F([104,42],[100,46],[...S,'100,52 120,46 108,34','~100,52 86,72 84,92'])),
+E('Rotacje szyi',1,N,'boczne mięśnie szyi','Opuść ucho do barku i lekko dociśnij dłonią, bez ciągnięcia. Drugie ramię luźno w dół. Oddychaj spokojnie, w połowie czasu zmień stronę.',F([108,34],[104,42],[...S,'100,52 120,48 112,30','~100,52 86,72 84,92'],AR('M120 22 Q134 32 130 48'))),
+E('Skłon głowy w przód',1,N,'kark i górna część pleców','Splecione dłonie za głową delikatnie opuszczają podbródek ku klatce. Barki luźno, bez szarpania, plecy proste.',F([104,42],[100,46],[...S,'100,52 120,46 108,34','~100,52 86,72 84,92'])),
 E('Krążenia ramion',1,A,'barki i obręcz barkowa','Wyprostowane ręce rysują duże koła: pół czasu do przodu, pół do tyłu. Brzuch napięty, barki nie wędrują do uszu.',F([100,34],[100,54],[...S,'100,52 70,52 48,52','~100,52 130,52 152,52'],'<circle class="dsh" cx="48" cy="52" r="13"/><circle class="dsh" cx="152" cy="52" r="13"/>')),
 E('Triceps za głową',1,A,'tricepsy i boki tułowia','Łokieć w górę, dłoń opada za plecy. Druga ręka dociska łokieć za głowę. Nie wypychaj żeber do przodu.',F([100,34],[110,28],[...S,'100,52 116,28 102,40','~100,52 90,38 112,28']),1),
 E('Bark w poprzek',1,A,'tylna część barku','Wyprostowane ramię przyciągnij do klatki drugą ręką, dociskając nad łokciem, nie na stawie. Barki w dół.',F([100,34],[112,54],[...S,'100,54 126,54','~100,52 114,62 124,54']),1),
@@ -249,6 +253,41 @@ E('Mostek',3,B,'przód ciała, klatka, zginacze bioder','Unieś biodra wysoko, �
 E('Zwis na drążku',1,B,'najszerszy grzbietu, barki, chwyt','Chwyt nachwytem na szerokość barków, rozluźnij barki i zwiś całym ciężarem. Oddychaj spokojnie; gdy chwyt słabnie, podeprzyj się palcami stóp.',F([104,38],[100,62],['100,46 100,92','100,92 98,126','~100,92 104,124','100,46 98,14','~100,46 102,14'],BAR),0,1),
 E('Zwis ze skrętem',2,B,'skośne mięśnie brzucha, najszerszy, kręgosłup','Z zwisu delikatnie skręcaj biodra i nogi na boki, ramiona stabilne. Ruch mały i kontrolowany, bez bujania.',F([104,38],[100,86],['100,46 100,92','100,92 120,118','~100,92 124,114','100,46 98,14','~100,46 102,14'],BAR+AR('M132 98 Q144 112 130 126')),0,1),
 E('Zwis jednorącz',3,B,'najszerszy, barki, przedramię','Jedna ręka na drążku, druga podtrzymuje przedramię lub kciuk. Biodra odsuń w przeciwną stronę, barki bez unoszenia. Skończ, gdy chwyt słabnie.',F([104,38],[96,60],['100,46 100,92','100,92 98,126','~100,92 104,124','100,46 98,14','~100,52 112,70 106,84'],BAR),1,1),
+E('Skręt szyi',1,N,'mięśnie szyi, mostkowo-obojczykowo-sutkowy','Wolno obróć głowę i spójrz przez ramię, podbródek równolegle do podłogi. Barki nieruchomo, nie wymuszaj ruchu.',F([104,34],[102,42],[...S,'100,52 86,72 84,92','~100,52 114,72 116,92'],AR('M114 24 Q128 28 130 40')),1),
+E('Wzruszenia barków',1,A,'czworoboczny, górna część pleców','Unieś barki do uszu, przytrzymaj chwilę i opuść z wydechem. Potem kilka krążeń do tyłu. Szyja luźna.',F([100,38],[100,50],[...S,'100,50 86,66 84,90','~100,50 114,66 116,90'],AR('M70 50 L70 36')+AR('M130 50 L130 36'))),
+E('Objęcie górnych pleców',1,B,'między łopatkami, tylna część barków','Objmij się ramionami i zaokrąglij górne plecy, głowa luźno w dół. Oddychaj w przestrzeń między łopatkami.',F([100,40],[100,56],[...S,'100,52 122,62 90,62','~100,52 78,62 110,62'])),
+E('Klatka w drzwiach',1,A,'mięśnie piersiowe, przód barku','Przedramię na framudze, łokieć na wysokości barku. Krok do przodu i lekko obróć tułów od ręki. Barki nisko.',F([96,34],[112,52],['98,45 98,85','98,85 90,130','~98,85 112,130','98,52 126,52 126,26'],'<line class="gr" x1="132" y1="8" x2="132" y2="130"/>'),1),
+E('Skłon boczny w siadzie',1,B,'boki tułowia, najszerszy','Siad skrzyżny, jedna ręka nad głową, druga podpiera. Przechyl się w bok z długimi plecami, oba pośladki na podłodze.',F([76,64],[90,84],['100,118 90,76','100,118 66,120 82,127','~100,118 134,120 116,127','90,80 80,52 62,40','~90,80 104,96 108,110']),1),
+E('Gwiazda leżąc',1,B,'przód ciała, boki, barki','Leżąc na plecach wyciągnij ręce za głowę, a nogi w przeciwną stronę. Wydłużaj się z wdechem, rozluźniaj z wydechem.',F([40,117],[100,119],['50,121 110,121','110,121 172,121','52,121 28,104 8,104'])),
+E('Szczęśliwe dziecko',1,C,'przywodziciele, biodra, dolne plecy','Leżąc, chwyć stopy od zewnątrz i rozchyl kolana szeroko ku bokom klatki. Krzyżec na podłodze, kark długi.',F([40,117],[112,96],['50,121 110,121','110,121 126,88 104,68','~110,121 134,90 118,68','72,121 100,92 108,70'])),
+E('Pośladek w siadzie na krześle',1,C,'pośladki, gruszkowaty','Kostka na kolanie, plecy proste, pochyl się do przodu z bioder. Im niżej, tym mocniej. Kolano nie dociskaj siłą.',F([102,40],[114,90],['100,92 102,50','100,92 132,92 132,130','~100,92 124,82 138,92'],'<path class="bar" style="fill:none" d="M80 96 H150 M84 96 V130 M146 96 V130"/>'),1),
+E('Opuszczanie pięt na stopniu',1,D,'łydki, ścięgno Achillesa','Przód stopy na krawędzi stopnia, opuść pięty poniżej poziomu. Trzymaj się ściany, kolana proste.',F([100,34],[100,112],['100,45 100,88','100,88 98,118','~100,88 104,118','100,52 124,56'],'<path class="bar" style="fill:none" d="M80 122 H116"/><line class="gr" x1="130" y1="10" x2="130" y2="130"/>')),
+E('Nić igły',2,B,'górne plecy, barki, kręgosłup','Z klęku podpartego przesuń jedną rękę pod drugą wzdłuż podłogi, bark i skroń opuść na matę. Biodra nad kolanami.',F([66,114],[88,96],['140,74 92,94','140,74 140,112 172,128','92,94 62,116 38,126','~92,94 92,130']),1),
+E('Czworogłowy leżąc na boku',2,D,'przód uda, zginacze bioder','Leżąc na boku, chwyć górną stopę i zbliż piętę do pośladka. Kolana razem, miednica lekko podwinięta.',F([40,117],[132,108],['50,121 110,121','~110,121 172,121','110,121 150,116 122,100','70,121 98,106 122,100']),1),
+E('Skłon w rozkroku stojąc',2,D,'tył ud, przywodziciele','Stopy szeroko, plecy długie, pochyl się z bioder i opuść ręce do podłogi. Głowa luźno, kolana miękkie.',F([100,112],[100,100],['100,72 100,102','100,72 58,130','~100,72 142,130','100,80 92,128','~100,80 108,128'])),
+E('Trójkąt',2,B,'boki tułowia, tył uda, przywodziciele','Nogi szeroko, przechyl tułów nad przednią nogę, dolna ręka na goleni, górna ku sufitowi. Klatka otwarta.',F([58,34],[96,70],['100,70 70,46','100,70 56,130','~100,70 148,130','70,46 72,100','70,46 68,8']),1),
+E('Przedramiona w klęku',2,A,'przedramiona, nadgarstki','W klęku podpartym obróć dłonie palcami do kolan. Delikatnie przenieś ciężar do tyłu, dłonie płasko.',F([66,72],[80,108],['140,86 84,74','140,86 140,112 172,128','84,74 80,126'],AR('M70 112 Q80 120 92 112'))),
+E('Pozycja żaby',3,C,'przywodziciele, wewnętrzna strona ud','Z klęku rozsuń kolana szeroko, biodra cofnij ku piętom, przedramiona na podłodze. Wchodź stopniowo, bez bólu w kolanach.',F([68,104],[140,102],['136,100 84,100','136,100 126,126 162,128','84,100 84,126 56,126'])),
+E('Pozycja bohatera',3,D,'przód uda, kolana, stopy','Usiądź między piętami, tułów prosto. Jeśli kolana protestują, podłóż poduszkę lub zrezygnuj. Ręce podpórka z tyłu.',F([106,58],[130,112],['112,114 106,70','112,114 150,112 150,126 110,126','106,76 92,104 80,124'])),
+E('Zwis na szerokim chwycie',2,A,'najszerszy grzbietu, barki, klatka','Chwyt szerzej niż barki, rozluźnij ramiona i zwiś. Oddychaj w boki klatki; kolana lekko ugięte, jeśli chwyt słabnie.',F([104,38],[100,62],['100,46 100,92','100,92 98,126','~100,92 104,124','100,46 74,14','~100,46 126,14'],BAR),0,1),
+E('Łydki w wykroku',1,D,'łydki, ścięgno Achillesa','Wykrok, tylna noga prosta, pięta dociśnięta do podłogi. Biodra lekko do przodu, stopy skierowane prosto.',F([100,43],[60,114],['100,88 100,50','100,88 138,88 138,130','~100,88 56,130','100,60 118,76 126,88']),1),
+E('Nogi na ścianie',1,D,'tył ud, łydki, odpływ żylny','Leżąc na plecach, ułóż nogi na ścianie, pośladki blisko niej. Rozluźnij ramiona i oddychaj głęboko.',F([40,117],[140,70],['50,121 128,121','128,121 144,46','~128,121 140,48','70,121 90,124'],'<line class="gr" x1="146" y1="8" x2="146" y2="130"/>')),
+E('Dwugłowy na krześle',1,D,'tył uda','Siedząc na brzegu krzesła wyprostuj nogę piętą do podłogi, pochyl tułów z prostymi plecami ku stopie.',F([124,52],[140,106],['96,92 120,60','96,92 132,92 132,130','~96,92 160,126','120,64 150,106'],'<path class="bar" style="fill:none" d="M78 96 H140 M82 96 V130 M136 96 V130"/>'),1),
+E('Piramida',2,D,'tył uda, łydki','Nogi na długości kroku, tułów pochyl nad prostą przednią nogą, dłonie na podłodze lub goleni. Biodra równo.',F([128,104],[100,100],['86,70 124,96','86,70 134,130','~86,70 52,130','124,96 136,128']),1),
+E('Czworogłowy przy ścianie',3,D,'przód uda, zginacze bioder','Tylne kolano na podłodze, stopa opiera się o ścianę za Tobą. Cofnij biodra ku ścianie, tułów prosto. Wchodź stopniowo.',F([72,52],[60,100],['70,110 72,64','70,110 100,108 100,130','~70,110 44,126 24,76'],'<line class="gr" x1="20" y1="8" x2="20" y2="130"/>'),1),
+E('Wymachy nogi',1,D,'tył i przód uda, biodra','Trzymając się ściany, wymachuj prostą nogą przód-tył w kontrolowanym zakresie. To rozgrzewka, nie szarpanie.',F([100,34],[120,100],['100,45 100,85','100,85 100,130','~100,85 140,96','100,52 80,60 70,52','~100,52 124,56 130,50'],AR('M122 122 Q150 112 152 90')),1),
+E('Półszpagat',3,D,'tył uda','Z klęku wyprostuj przednią nogę piętą do podłogi, biodra nad kolanem tylnej nogi. Plecy długie, nie zaokrąglaj.',F([128,84],[130,118],['90,112 120,90','90,112 172,126','~90,112 90,126 60,126','120,92 150,124']),1),
+E('Biceps przy ścianie',1,A,'biceps, przód barku','Dłoń na ścianie na wysokości barku, palce w tył. Obróć tułów powoli od ręki, aż poczujesz rozciąganie.',F([96,34],[116,56],['98,45 98,85','98,85 90,130','~98,85 112,130','98,54 134,54'],'<line class="gr" x1="138" y1="10" x2="138" y2="130"/>'),1),
+E('Splot dłoni w przód',1,A,'przedramiona, górne plecy','Spleć palce i wyprostuj ręce przed sobą dłońmi na zewnątrz, zaokrąglij górne plecy.',F([100,34],[130,58],[...S,'100,54 134,54','~100,54 132,58'])),
+E('Ręce za plecami',2,A,'triceps, bark, klatka','Jedna ręka nad ramieniem w dół, druga od dołu w górę, spróbuj spleść palce. Użyj paska lub ręcznika, jeśli się nie dotykają.',F([100,34],[104,62],[...S,'100,52 114,28 100,56','~100,54 88,76 98,62']),1),
+E('Modlitwa za plecami',2,A,'nadgarstki, przód barków, klatka','Dłonie złożone za plecami palcami w górę, łokcie cofnięte. Barki nisko, nie wypychaj żeber.',F([100,34],[96,66],[...S,'100,56 86,78 98,62'])),
+E('Orzeł – ramiona',2,A,'między łopatkami, tylna część barku','Skrzyżuj ręce, łokcie jeden na drugim, dłonie owiń. Unieś łokcie do wysokości barków, barki z dala od uszu.',F([100,34],[118,50],[...S,'100,54 120,54 118,32','~100,54 118,48 112,32']),1),
+E('Pozycja szczeniaka',2,A,'barki, górne plecy, boki','Z klęku podpartego wyciągnij ręce przed siebie, klatkę opuść ku podłodze, biodra nad kolanami. Czoło lub broda na macie.',F([54,112],[70,106],['136,80 80,100','136,80 136,112 168,128','80,100 48,126'])),
+E('Ramiona i plecy przy ścianie',1,A,'barki, najszerszy, klatka','Dłonie na ścianie powyżej głowy, odsuń stopy i wciśnij klatkę w dół. Plecy długie, nie wyginaj lędźwi.',F([104,50],[100,70],['86,90 110,62','86,90 70,130','~86,90 92,130','110,64 138,40'],'<line class="gr" x1="140" y1="8" x2="140" y2="130"/>')),
+E('Skręt na krześle',1,B,'plecy, skośne mięśnie brzucha','Siedząc prosto, obróć tułów i chwyć oparcie. Skręcaj z wydechem, biodra i kolana skierowane do przodu.',F([104,42],[104,70],['102,92 104,50','102,92 134,92 134,130','102,60 130,74 118,86','~102,60 84,76 86,50'],'<path class="bar" style="fill:none" d="M78 96 H140 M82 96 V130 M136 96 V130 M82 96 V54"/>'),1),
+E('Krokodyl',2,B,'lędźwie, biodra, klatka','Leżąc na brzuchu, ręce na boki. Zegnij jedną nogę i przenieś ją w bok za siebie w skręcie, klatka dociska do podłogi.',F([40,117],[110,114],['50,121 110,121','110,121 172,121','~110,121 130,96 120,121','56,121 52,100']),1),
+E('Wygięcie w tył stojąc',2,B,'przód tułowia, zginacze bioder','Dłonie na lędźwiach, delikatnie wygnij się do tyłu, patrząc przed siebie. Pośladki napięte, nie zapadaj się w lędźwiach.',F([84,38],[96,58],['100,85 90,50','100,85 90,130','~100,85 110,130','90,54 108,66 104,84'],AR('M70 70 Q62 54 70 42'))),
+E('Otwarcie książki',2,B,'klatka, kręgosłup piersiowy','Leżąc na boku z ugiętymi kolanami, otwórz górną rękę łukiem za siebie, wzrok za dłonią. Kolana trzymaj razem.',F([42,117],[80,102],['50,121 110,121','110,121 140,112 150,121','70,121 72,84 40,90']),1),
 E('Szpagat siedząc',3,C,'przywodziciele, tył ud','Nogi szeroko, plecy proste, sięgaj rękami przed siebie. Stopy zgięte, kolana ku górze.',F([100,72],[70,120],['100,120 100,84','100,120 42,124','~100,120 158,124','100,88 70,108 50,122']))
 ];
 const LV=[{n:'Łatwy',t:20},{n:'Średni',t:30},{n:'Trudny',t:40}];
@@ -310,11 +349,11 @@ $('plan').onclick=e=>{const b=e.target.closest('.hv');if(!b)return;const n=EX[+b
 
 /* tabs */
 function tab(n){
-  $('home').hidden=n!==1;$('stats').hidden=n!==2;$('setp').hidden=n!==3;$('cta').style.display=n===1?'':'none';
-  [1,2,3].forEach(i=>$('t'+i).setAttribute('aria-selected',i===n));
-  n===2?renderStats():n===3?renderSet():renderHome();scrollTo(0,0);
+  $('home').hidden=n!==1;$('stats').hidden=n!==2;$('setp').hidden=n!==3;$('libp').hidden=n!==4;$('cta').style.display=n===1?'':'none';
+  [1,2,3,4].forEach(i=>$('t'+i).setAttribute('aria-selected',i===n));
+  n===2?renderStats():n===3?renderSet():n===4?renderLib():renderHome();scrollTo(0,0);
 }
-[1,2,3].forEach(i=>$('t'+i).onclick=()=>tab(i));
+[1,2,3,4].forEach(i=>$('t'+i).onclick=()=>tab(i));
 
 /* settings + theme */
 const PN={lagoon:'Laguna',limber:'Limber',lavender:'Lawenda',forest:'Las'},PC={lagoon:'#0F8F8B',limber:'#D9531E',lavender:'#6B4EF0',forest:'#2F7D45'};
@@ -480,7 +519,7 @@ function bodySvg(c,w){
   const mx=Math.max(1,...REGS.map(g=>c[g]||0));
   const f=g=>{const v=c[g]||0;return v?`fill="var(--accent)" fill-opacity="${(.35+.65*v/mx).toFixed(2)}"`:'fill="var(--line)"'};
   const fig=(x,T)=>`<g transform="translate(${x},0)"><circle cx="40" cy="15" r="11" fill="var(--line)"/>
-<g ${f(A)}><rect x="34" y="26" width="12" height="9" rx="3"/><rect x="12" y="34" width="56" height="14" rx="7"/><rect x="6" y="42" width="11" height="46" rx="5.5"/><rect x="63" y="42" width="11" height="46" rx="5.5"/></g>
+<g ${f(N)}><rect x="33" y="24" width="14" height="12" rx="4"/></g><g ${f(A)}><rect x="12" y="34" width="56" height="14" rx="7"/><rect x="6" y="42" width="11" height="46" rx="5.5"/><rect x="63" y="42" width="11" height="46" rx="5.5"/></g>
 <g ${f(B)}><rect x="21" y="48" width="38" height="44" rx="10"/></g>
 <g ${f(C)}><rect x="21" y="93" width="38" height="17" rx="8"/></g>
 <g ${f(T)}><rect x="21" y="112" width="17" height="46" rx="8"/><rect x="42" y="112" width="17" height="46" rx="8"/></g>
@@ -532,7 +571,7 @@ function renderStats(){
   <div class="panel" style="margin-bottom:8px"><div class="lv" style="margin:0"><div class="tr"><i style="width:${Math.min(100,wkTotal/cfg.goal*100)}%"></i></div><em style="width:44px">${Math.min(100,Math.round(wkTotal/cfg.goal*100))}%</em></div></div>
   <div class="panel"><div class="bars">${bars.map(b=>`<div class="${b.m?'':'zero'}"><i style="height:${Math.max(4,b.m/mx*88)}%"></i><small>${b.l}</small></div>`).join('')}</div></div>
   <h2>Mapa rozciągania · 30 dni</h2>
-  ${(()=>{const gc={},lim=Date.now()-30*864e5;st.s.forEach(x=>{if(x.gc&&x.t>lim)for(const g in x.gc){const v=x.gc[g];(g==='Nogi'?[Q,H,L]:[g]).forEach(r=>gc[r]=(gc[r]||0)+v)}});return Object.keys(gc).length?bodyMap(gc):'<p class="empty">Mapa pojawi się po kolejnym treningu.</p>'})()}
+  ${(()=>{const gc={},lim=Date.now()-30*864e5;st.s.forEach(x=>{if(x.gc&&x.t>lim)for(const g in x.gc){const v=x.gc[g];(g==='Nogi'?[Q,H,L]:g==='Szyja i barki'?[N,A]:[g]).forEach(r=>gc[r]=(gc[r]||0)+v)}});return Object.keys(gc).length?bodyMap(gc):'<p class="empty">Mapa pojawi się po kolejnym treningu.</p>'})()}
   <h2>Poziomy trudności</h2>
   <div class="panel">${LV.map((l,i)=>`<div class="lv"><span>${l.n}</span><div class="tr"><i style="width:${lvC[i]/lm*100}%"></i></div><em>${lvC[i]}</em></div>`).join('')}</div>
   <h2>Odznaki · ${got(st).length}/${BG.length}</h2>
@@ -551,6 +590,28 @@ function renderStats(){
   }
 }
 
+let lf={g:'',lv:0,q:''};const lo=new Set();
+function libList(){
+  const q=lf.q.trim().toLowerCase();
+  const ls=EX.filter(e=>(!lf.g||e.g===lf.g)&&(!lf.lv||e.lv===lf.lv)&&(!q||(e.n+' '+e.m).toLowerCase().includes(q)));
+  $('libList').innerHTML=`<p class="sub" style="margin:10px 0">Pokazano ${ls.length} z ${EX.length}</p>`+ls.map(e=>{const i=EX.indexOf(e);return`<div class="lr" data-i="${i}"><div class="row"><div class="th">${e.v}</div><div class="nm"><b>${e.n}</b><span>${e.m}</span></div><button class="hv" data-i="${i}" aria-label="Ulubione">${cfg.fav.includes(e.n)?'♥':'♡'}</button><div class="sec">${LV[e.lv-1].n}</div></div><div class="dt" ${lo.has(i)?'':'hidden'}><div class="art" style="max-width:320px;margin:8px auto">${e.v}<div class="mm">${bodySvg(Object.fromEntries(regs(e).map(r=>[r,1])),64)}</div></div><p style="margin:6px 4px">${e.tip}</p><p class="sub" style="margin:0 4px 4px">Rozciągasz: ${e.m}${e.sides?' · każda strona osobno':''}${e.bar?' · wymaga drążka':''}</p></div></div>`}).join('');
+}
+function renderLib(){
+  $('libsum').textContent=GR.map(g=>g+' '+EX.filter(e=>e.g===g).length).join(' · ');
+  $('libBody').innerHTML=`<div class="chips" style="margin-top:12px">${['',...GR].map(g=>`<button data-lg="${g}" aria-pressed="${lf.g===g}">${g||'Wszystkie'} (${g?EX.filter(e=>e.g===g).length:EX.length})</button>`).join('')}</div>
+  <div class="chips" style="margin-top:8px">${[[0,'Wszystkie poziomy'],[1,'Łatwy'],[2,'Średni'],[3,'Trudny']].map(([v,l])=>`<button data-ll="${v}" aria-pressed="${lf.lv===v}">${l}</button>`).join('')}</div>
+  <input id="lq" class="srch" type="search" placeholder="Szukaj ćwiczenia lub mięśnia…" value="${lf.q.replace(/"/g,'&quot;')}"><div id="libList"></div>`;
+  libList();
+}
+$('libBody').onclick=e=>{
+  const h=e.target.closest('.hv');
+  if(h){const n=EX[+h.dataset.i].n,k=cfg.fav.indexOf(n);k<0?cfg.fav.push(n):cfg.fav.splice(k,1);store.set('stretch.cfg',cfg);libList();return}
+  const b=e.target.closest('button');
+  if(b&&b.dataset.lg!==undefined){lf.g=b.dataset.lg;renderLib();return}
+  if(b&&b.dataset.ll!==undefined){lf.lv=+b.dataset.ll;renderLib();return}
+  const r=e.target.closest('.lr');if(r){const i=+r.dataset.i;lo.has(i)?lo.delete(i):lo.add(i);libList()}
+};
+$('libBody').oninput=e=>{if(e.target.id==='lq'){lf.q=e.target.value;libList()}};
 async function exp(){
   const f=new File([JSON.stringify({v:1,cfg,data:store.get('stretch.data',{s:[]})})],'stretch-kopia-'+dk(Date.now())+'.json',{type:'application/json'});
   try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e.name==='AbortError')return}
